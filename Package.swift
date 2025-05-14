@@ -3,22 +3,21 @@
 
 import PackageDescription
 
+
 let package = Package(
     name: "CustomCalender",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "CustomCalender",
-            targets: ["CustomCalender"]),
-    ],
+    platforms: [.iOS(.v15)],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "CustomCalender"),
+        .target(name: "CustomCalender"),
         .testTarget(
             name: "CustomCalenderTests",
-            dependencies: ["CustomCalender"]
-        ),
+            dependencies: ["CustomCalender"],
+            swiftSettings: [
+                .enableExperimentalFeature("Embedded"),
+                .enableExperimentalFeature("StrictConcurrency"),
+                .enableExperimentalFeature("TestableExecutables"),
+                .enableExperimentalFeature("Testing") // 👈 this one enables @Suite, @Test
+            ]
+        )
     ]
 )
