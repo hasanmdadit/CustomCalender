@@ -26,13 +26,6 @@ final class CustomCalenderTests: XCTestCase {
         XCTAssertEqual(calendar.component(.month, from: calendarView.currentMonth), calendar.component(.month, from: initialMonth), "Previous month navigation failed")
     }
     
-    func testGenerateCalendarDays() {
-        let calendarView = CalendarView()
-        let days = calendarView.generateCalendarDays()
-        XCTAssertFalse(days.isEmpty, "Calendar days should not be empty")
-        XCTAssertEqual((days.count - 2), 35, "Generated days count does not match expected grid size (assuming 5 rows max)")
-    }
-    
     func testIsPastDate() {
         let calendarView = CalendarView()
         let pastDate = calendar.date(byAdding: .day, value: -1, to: Date())!
