@@ -6,7 +6,7 @@ import PackageDescription
 
 let package = Package(
     name: "CustomCalender",
-    platforms: [.iOS(.v15)],
+    platforms: [.iOS(.v16)],
     targets: [
         .target(name: "CustomCalender"),
         .testTarget(
