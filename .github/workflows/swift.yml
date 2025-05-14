@@ -20,15 +20,18 @@ jobs:
       - name: Set Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
+
       - name: List Available Simulators (for debug)
         run: xcrun simctl list devices
 
-      - name: Run iOS Simulator Tests (Xcode)
-        run: |
-          xcodebuild test \
-            -scheme CustomCalender \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
-            -sdk iphonesimulator \
-            -enableCodeCoverage YES \
-            -parallel-testing-enabled YES \
-            -testPlan CustomCalenderTests # Optional: if using .xctestplan
+      - name: Run Tests with Raw Output
+          run: |
+            set -o pipefail && \
+            xcodebuild test \
+              -scheme CustomCalender \
+              -destination "platform=iOS Simulator,name=iPhone 16,OS=18.2" \
+              -sdk iphonesimulator \
+              -enableCodeCoverage YES \
+              -parallel-testing-enabled YES \
+              -testPlan CustomCalenderTests \
+              | tee result.log | xcpretty --test --color
