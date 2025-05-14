@@ -1,27 +1,40 @@
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
-name: Swift
+name: Swift Build and Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: macos-14 # Ensures Xcode 15.4 or newer for Swift 5.10
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    xcodebuild test \
-      -scheme CustomCalender \
-      -destination 'platform=iOS Simulator,name=iPhone 15' \
-      -sdk iphonesimulator
+      - name: Set Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+
+      - name: Build Swift Package (SPM)
+        run: swift build -v
+
+      - name: Run SwiftPM Tests
+        run: swift test -v
+
+      - name: List Available Simulators (for debug)
+        run: xcrun simctl list devices
+
+      - name: Run iOS Simulator Tests (Xcode)
+        run: |
+          xcodebuild test \
+            -scheme CustomCalender \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -sdk iphonesimulator \
+            -enableCodeCoverage YES \
+            -parallel-testing-enabled YES \
+            -testPlan CustomCalenderTests # Optional: if using .xctestplan
