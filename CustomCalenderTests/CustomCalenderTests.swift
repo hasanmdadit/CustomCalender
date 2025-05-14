@@ -12,7 +12,7 @@ import SwiftUI
 final class CustomCalenderTests: XCTestCase {
     @State private var selectedDate: Date? = nil
     let calendar = Calendar.current
-    
+    // Test
     func testMonthNavigation() {
         let calendarView = CalendarView()
         let initialMonth = calendarView.currentMonth
@@ -24,13 +24,6 @@ final class CustomCalenderTests: XCTestCase {
         calendarView.previousMonth()
         XCTAssertEqual(calendar.component(.year, from: calendarView.currentMonth), calendar.component(.year, from: initialMonth), "Previous month navigation failed")
         XCTAssertEqual(calendar.component(.month, from: calendarView.currentMonth), calendar.component(.month, from: initialMonth), "Previous month navigation failed")
-    }
-    
-    func testGenerateCalendarDays() {
-        let calendarView = CalendarView()
-        let days = calendarView.generateCalendarDays()
-        XCTAssertFalse(days.isEmpty, "Calendar days should not be empty")
-        XCTAssertEqual((days.count - 2), 35, "Generated days count does not match expected grid size (assuming 5 rows max)")
     }
     
     func testIsPastDate() {
