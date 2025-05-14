@@ -20,12 +20,6 @@ jobs:
       - name: Set Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-      - name: Build Swift Package (SPM)
-        run: swift build -v
-
-      - name: Run SwiftPM Tests
-        run: swift test -v
-
       - name: List Available Simulators (for debug)
         run: xcrun simctl list devices
 
