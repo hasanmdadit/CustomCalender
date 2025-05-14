@@ -33,7 +33,7 @@ jobs:
         run: |
           xcodebuild test \
             -scheme CustomCalender \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
             -sdk iphonesimulator \
             -enableCodeCoverage YES \
             -parallel-testing-enabled YES \
